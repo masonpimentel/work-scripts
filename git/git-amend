@@ -1,0 +1,19 @@
+#!/bin/bash
+
+export COMMIT_SAVE=true
+export CUSTOM_GIT=true
+unset COMMIT_MESSAGE
+
+v=$(git status)
+IFS="/" read -ra RESAR <<< "$v"
+v="${RESAR[1]}"
+IFS="-" read -ra RESAR <<< "$v"
+v="${RESAR[0]}-${RESAR[1]} "
+
+if [ $v != "-" ]; then
+    git commit --amend
+else
+    echo "You might have set up your branch incorrectly!"
+fi
+
+export CUSTOM_GIT=false

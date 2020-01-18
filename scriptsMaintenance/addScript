@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# makes a newly created script in ~/Scripts executable
+
+if [ -z "$1" ]
+then
+      echo "Usage: addScripts <new script name>"
+      exit
+fi
+
+chmod u+x ~/Scripts/$1

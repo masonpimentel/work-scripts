@@ -1,0 +1,11 @@
+#!/bin/bash
+
+res=$(pgrep -f buildLog)
+
+## CONFIGURE
+
+if [[ -z "$res" ]]; then
+    /Users/masonpimentel/Repos/work-scripts/workflow/buildLog/buildLog 96
+else
+    echo "buildLog already running"
+fi

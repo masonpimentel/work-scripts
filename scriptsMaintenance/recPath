@@ -1,0 +1,17 @@
+#!/bin/bash
+
+dirs=()
+while IFS=  read -r -d $'\0'; do
+    dirs+=("$REPLY")
+done < <(find ~/Scripts -type d -print0)
+
+res=$PATH
+for i in "${dirs[@]}"
+do
+    if  [[ $i != *'.git'* ]] && [[ $i != *'.idea'* ]]; then
+        res="${i}:${res}"
+    fi
+done
+
+export PATH=$res:$PATH
+
