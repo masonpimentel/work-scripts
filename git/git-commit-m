@@ -1,0 +1,15 @@
+#!/bin/bash
+
+if [ -z "$1" ]
+then
+      echo "Usage: git-commit-m <commit message>"
+      exit
+fi
+
+v=$(git status)
+IFS=" " read -ra RESAR <<< "$v"
+v="${RESAR[2]}"
+IFS="-" read -ra RESAR <<< "$v"
+v="${RESAR[0]}-${RESAR[1]}"
+
+git commit -m "$v $1" 
