@@ -1,7 +1,0 @@
-#!/bin/bash
-
-branches=$@
-for b in $branches
-do
-    git branch -D $b
-done
