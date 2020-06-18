@@ -24,11 +24,11 @@ Return
   Send ^+t
 Return
 
-^4::
+!4::
   Send !{Right}
 Return
 
-^5::
+!5::
   Send !{Left}
 Return
 
