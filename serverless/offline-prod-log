@@ -1,0 +1,3 @@
+#!/bin/bash
+
+offline-prod $1 2>&1 | tee log.txt

@@ -1,0 +1,9 @@
+#!/bin/bash
+
+if [ -z "$1" ]
+then
+      echo "Usage: offline <service name>"
+      exit
+fi
+
+AWS_PROFILE=perkhero node inspect ../../node_modules/.bin/serverless offline --clientName perkhero --appRegion us --stage dev --userPoolId us-east-1_cXrG5Iger --awsRegion us-east-1 --accountId 118104133007 --apiDomain perkhero.us --apiName $1
