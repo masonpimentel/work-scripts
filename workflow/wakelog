@@ -1,9 +1,0 @@
-#!/bin/bash
-
-if [ -z "$1" ]
-then
-      echo "Usage: wakelog <log size (integer)>"
-      exit
-fi
-
-pmset -g log | grep sleep | tail -n $1

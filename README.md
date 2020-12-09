@@ -1,1 +1,3 @@
-### Shell scripts
+### Glance/PH scripts
+
+Run ./setup.sh

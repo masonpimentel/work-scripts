@@ -1,8 +1,0 @@
-#!/bin/bash
-
-arr=($(pgrep -f buildLog))
-
-for e in "${arr[@]}"
-do
-    kill $e
-done
