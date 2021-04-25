@@ -1,0 +1,32 @@
+#!/bin/bash
+
+## CONFIGURE: touch id?
+
+# login: with touch ID
+#loginGrep="''======== SCREENLOCK ==== APEventTouchIDMatch =========''"
+loginGrep='grep "enter. password is CORRECT"'
+
+while true; do
+    logins=$(log show --style syslog -last $1h --predicate 'process == "loginwindow"' --debug --info | grep "enter. password is CORRECT" | cut -c 1-19 | sed 's/^/login  /' | tail -n 100)
+
+    # works for touch ID and non touch ID Macs
+    logouts=$(log show --style syslog -last $1h --predicate 'process == "loginwindow"' --debug --info | grep "Raising shield window if it isn't already showing" | cut -c 1-19 | sed 's/^/logout /' | tail -n 100)
+
+    ## CONFIGURE: python3 path
+    ## CONFIGURE: Scripts path
+    ## CONFIGURE: Days path
+
+    /usr/local/bin/python3 /Users/masonpimentel/Repos/work-scripts/workflow/buildLog/parseLogs.py "$logins" "$logouts" > /Users/masonpimentel/GoogleDrive/Days/tempLogs.tmp
+
+    ## CONFIGURE: touch /Users/masonpimentel/GoogleDrive/Days/macLogins.txt
+
+    if [ -z "$(diff -q /Users/masonpimentel/GoogleDrive/Days/tempLogs.tmp /Users/masonpimentel/GoogleDrive/Days/macLogins.txt)" ]; then
+        echo No changes
+    else
+        mv /Users/masonpimentel/GoogleDrive/Days/tempLogs.tmp /Users/masonpimentel/GoogleDrive/Days/macLogins.txt
+    fi
+
+    if [ -f tempLogs.tmp ]; then
+        rm /Users/masonpimentel/GoogleDrive/Days/tempLogs.tmp
+    fi
+done
