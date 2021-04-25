@@ -26,4 +26,7 @@ for /F "tokens=3 delims= " %%a in ("%var1%") do (
   )
 )
 
-git commit -m "%pt1%-%pt2% %1"
+SET msg=%1
+SET msg=%msg:"=%
+
+git commit -m "%pt1%-%pt2% %msg%"
