@@ -1,3 +1,0 @@
-#!/bin/bash
-
-git cherry-pick --no-commit 79f632647a07cf2d6b638c451fbec0b28f5a6569
