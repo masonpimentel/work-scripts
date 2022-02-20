@@ -1,4 +1,3 @@
-### Glance/PH scripts
+### Work scripts
 
-CP contents to ~/Scripts
 Run ./setup.sh
