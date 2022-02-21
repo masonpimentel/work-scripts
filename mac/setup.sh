@@ -4,4 +4,4 @@ read termInit
 cat scriptsMaintenance/recPath | tail -n +3 > $termInit
 echo "2. Mac username (path of user root, ex. /Users/mason.pimentel - enter mason.pimentel)"
 read username
-sed -i '' "s/pathgoeshere/$username/" workflow/l
+sed -i '' "s/usernamegoeshere/$username/" ~/Scripts/mac/workflow/l

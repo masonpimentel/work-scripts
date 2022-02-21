@@ -10,9 +10,9 @@ echo Creating directory $dir
 notes="Notes"$dir".txt"
 echo Creating $notes
 
-days="/Users/masonpimentel/Google Drive/Work/Days/"
+days="/Users/usernamegoeshere/Google Drive/My Drive/Work/Days/"
 
-mkdir $days$dir
-touch $days$dir/$notes
-echo $(date +"%A") > $days$dir/$notes
-printf "\n" >> $days$dir/$notes
+mkdir "$days$dir"
+touch "$days$dir/$notes"
+echo $(date +"%A") > "$days$dir/$notes"
+printf "\n" >> "$days$dir/$notes"
