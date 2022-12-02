@@ -10,7 +10,7 @@ echo Creating directory $dir
 notes="Notes"$dir".txt"
 echo Creating $notes
 
-days="/Users/usernamegoeshere/Google Drive/My Drive/Work/Days/"
+days="/Users/mason.pimentel/Google Drive/My Drive/Work/Days/"
 
 mkdir "$days$dir"
 touch "$days$dir/$notes"
