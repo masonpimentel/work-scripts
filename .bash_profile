@@ -216,6 +216,14 @@ function empty-commit() {
   git commit --allow-empty -m rb;
 }
 
+function nvm-12() {
+  nvm use v12.22.10;
+}
+
+function nvm-14() {
+  nvm use v14.19.1;
+}
+
 # alias server-up-temp='server-docker && export COMPOSE_FILE=docker-compose.yml:docker-compose.override.yml:docker-compose.incremental.yml && xp staging-dev && docker-compose up -d '
 # alias server-up-es='server-docker && export COMPOSE_FILE=docker-compose.yml:docker-compose.override.yml:docker-compose.incremental.yml:docker-compose.local-es.yml:docker-compose.local-disabled.yml && xp staging-dev && docker-compose up -d '
 # alias server-up-harold='server-docker && export COMPOSE_FILE=docker-compose.yml:docker-compose.override.yml:docker-compose.incremental.yml:docker-compose.local-harold.yml:docker-compose.local-disabled.yml && xp staging-dev && docker-compose up -d '
