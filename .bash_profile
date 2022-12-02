@@ -224,6 +224,15 @@ function nvm-14() {
   nvm use v14.19.1;
 }
 
+function create-init-branch() {
+  curBranch=$(git rev-parse --abbrev-ref HEAD)
+  git checkout -b "${curBranch}init"
+  git push -u origin HEAD
+  git checkout $curBranch
+  git reset --hard origin/master
+  git push -uf origin HEAD
+}
+
 # alias server-up-temp='server-docker && export COMPOSE_FILE=docker-compose.yml:docker-compose.override.yml:docker-compose.incremental.yml && xp staging-dev && docker-compose up -d '
 # alias server-up-es='server-docker && export COMPOSE_FILE=docker-compose.yml:docker-compose.override.yml:docker-compose.incremental.yml:docker-compose.local-es.yml:docker-compose.local-disabled.yml && xp staging-dev && docker-compose up -d '
 # alias server-up-harold='server-docker && export COMPOSE_FILE=docker-compose.yml:docker-compose.override.yml:docker-compose.incremental.yml:docker-compose.local-harold.yml:docker-compose.local-disabled.yml && xp staging-dev && docker-compose up -d '
