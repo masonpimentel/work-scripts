@@ -192,11 +192,13 @@ function cms-status-bar-app() {
 
 function cms-deploy-int() {
   xp staging-dev;
-  nx run ctf-scripts:validate-int;
+  cd ~/xealth/xealth-cms;
+  nx run ctf-scripts:test;
   if [ $? -ne 0 ]; then
     return
   fi
-  nx run ctf-scripts:deploy-int;
+  echo "doing"
+  # nx run ctf-scripts:deploy-int;
 }
 
 # Docker ---------------------------------------------------------------------------
