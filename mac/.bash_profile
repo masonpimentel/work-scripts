@@ -87,23 +87,23 @@ function server-down() {
 }
 
 function server-up() {
+  AWS_PROFILE=staging-dev-x;
   server-docker;
   export COMPOSE_FILE=docker-compose.yml:docker-compose.override.yml:docker-compose.incremental.yml:docker-compose.local-disabled.yml;
-  xp staging-dev;
   docker-compose up;
 }
 
 function server-up-xqaa() {
+  AWS_PROFILE=staging-dev-x;
   server-docker;
   export COMPOSE_FILE=docker-compose.yml:docker-compose.override.yml:docker-compose.incremental.yml;
-  xp staging-dev;
   docker-compose up;
 }
 
 function server-up-locales() {
+  AWS_PROFILE=staging-dev-x;
   server-docker;
   export COMPOSE_FILE=docker-compose.yml:docker-compose.override.yml:docker-compose.incremental.yml:docker-compose.local-es.yml
-  xp staging-dev;
   docker-compose up;
 }
 
@@ -113,9 +113,9 @@ function server-logs() {
 }
 
 function server-up-pns() {
-  server-docker
+  AWS_PROFILE=staging-dev-x;
+  server-docker;
   export COMPOSE_FILE=docker-compose.yml:docker-compose.override.yml:docker-compose.incremental.yml:docker-compose.local-disabled.yml:docker-compose.local-pns.yml;
-  xp staging-dev;
   docker-compose up;
 }
 
@@ -137,6 +137,11 @@ function server-test-int() {
 function server-test-legacy() {
   server-docker;
   docker-compose exec servertest npm run test:run -- -w dist/test/mocha/legacy --recursive --exit;
+}
+
+function server-test-system() {
+  server-docker;
+  docker-compose exec servertest npm run test:run -- -w dist/test/mocha/system --recursive --exit;
 }
 
 # Xealth-CMS ---------------------------------------------------------------------------
@@ -197,8 +202,19 @@ function cms-deploy-int() {
   if [ $? -ne 0 ]; then
     return
   fi
-  echo "doing"
-  # nx run ctf-scripts:deploy-int;
+  nx run ctf-scripts:deploy-int;
+}
+
+# Xealth-CMT ---------------------------------------------------------------------------
+
+function cmt-server-dir() {
+  cd $XEALTH_ROOT/xealth-config-ui-tool/backend;
+}
+
+function cmt-server() {
+  cmt-server-dir;
+  xp staging-dev;
+  npm run start;
 }
 
 # Docker ---------------------------------------------------------------------------
