@@ -14,6 +14,7 @@ done
 export PATH=$res:$PATH
 export PATH=~/xealth/xealth-devtools/tools/xscripts:$PATH
 export PATH=/usr/bin:$PATH
+export PATH=~/.rd/bin:$PATH
 
 export XEALTH_NPM_TOKEN=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
 export XEALTH_ROOT=~/xealth
@@ -109,7 +110,12 @@ function server-up-locales() {
 
 function server-logs() {
   server-docker;
-  docker logs -f xealth_server_1 | bunyan;
+  docker logs -f xealth-server-1 | bunyan;
+}
+
+function server-worker-logs() {
+  server-docker;
+  docker logs -f xealth-worker-1 | bunyan;
 }
 
 function server-up-pns() {
@@ -185,14 +191,8 @@ function cms-full() {
   npm run start;
 }
 
-function cms-fields-app() {
-  cd $XEALTH_ROOT/xealth-cms/contentful/apps/fields;
-  npm run start;
-}
-
-function cms-status-bar-app() {
-  cd $XEALTH_ROOT/xealth-cms/contentful/apps/status-bar;
-  npm run start;
+function cms-ui() {
+  npm run serve;
 }
 
 function cms-deploy-int() {
@@ -256,6 +256,10 @@ function create-init-branch() {
   git checkout $curBranch
   git reset --hard origin/master
   git push -uf origin HEAD
+}
+
+function init-personal() {
+  ssh-add ~/.ssh/id_ed25519_mpimentel;
 }
 
 # Misc ---------------------------------------------------------------------------
