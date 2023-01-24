@@ -192,6 +192,7 @@ function cms-full() {
 }
 
 function cms-ui() {
+  cms-server-dir;
   npm run serve;
 }
 
