@@ -62,7 +62,7 @@ function server-docker() {
   cd $XEALTH_ROOT/xealth-server/docker/local;
 }
 
-# Xealth-Server ---------------------------------------------------------------------------
+# Xealth-Server ----------------------------------------------------------------
 
 function server-ps() {
   server-docker;
@@ -150,7 +150,11 @@ function server-test-system() {
   docker-compose exec servertest npm run test:run -- -w dist/test/mocha/system --recursive --exit;
 }
 
-# Xealth-CMS ---------------------------------------------------------------------------
+# Xealth-CMS -------------------------------------------------------------------
+
+function cms-dir() {
+  cd $XEALTH_ROOT/xealth-cms;
+}
 
 function cms-server-dir() {
   cd $XEALTH_ROOT/xealth-cms/server;
@@ -192,7 +196,7 @@ function cms-full() {
 }
 
 function cms-ui() {
-  cms-server-dir;
+  cms-dir;
   npm run serve;
 }
 
@@ -206,7 +210,7 @@ function cms-deploy-int() {
   nx run ctf-scripts:deploy-int;
 }
 
-# Xealth-CMT ---------------------------------------------------------------------------
+# Xealth-CMT -------------------------------------------------------------------
 
 function cmt-server-dir() {
   cd $XEALTH_ROOT/xealth-config-ui-tool/backend;
@@ -218,7 +222,20 @@ function cmt-server() {
   npm run start;
 }
 
-# Docker ---------------------------------------------------------------------------
+# Xealth-Grotto ----------------------------------------------------------------
+
+function grotto-backend-dir() {
+  cd $XEALTH_ROOT/xealth-grotto/grotto-backend;
+}
+
+function deploy-grotto() {
+  grotto-backend-dir;
+  xp staging-dev;
+  npm run build:dev;
+  npm run deploy:dev;
+}
+
+# Docker -----------------------------------------------------------------------
 
 function docker-down() {
   docker compose down --remove-orphans;
@@ -234,7 +251,7 @@ function docker-up() {
   docker-compose up;
 }
 
-# NVM ---------------------------------------------------------------------------
+# NVM --------------------------------------------------------------------------
 
 function nvm-12() {
   nvm use v12.22.10;
@@ -244,7 +261,7 @@ function nvm-14() {
   nvm use v14.19.1;
 }
 
-# Git ---------------------------------------------------------------------------
+# Git --------------------------------------------------------------------------
 
 function empty-commit() {
   git commit --allow-empty -m rb;
@@ -263,7 +280,7 @@ function init-personal() {
   ssh-add ~/.ssh/id_ed25519_mpimentel;
 }
 
-# Misc ---------------------------------------------------------------------------
+# Misc -------------------------------------------------------------------------
 
 function ecr-login() {
   xp master-build
