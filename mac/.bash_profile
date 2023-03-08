@@ -212,12 +212,28 @@ function cms-deploy-int() {
 
 # Xealth-CMT -------------------------------------------------------------------
 
+function cmt-client-dir() {
+  cd $XEALTH_ROOT/xealth-config-ui-tool/client;
+}
+
 function cmt-server-dir() {
   cd $XEALTH_ROOT/xealth-config-ui-tool/backend;
 }
 
 function cmt-server() {
   cmt-server-dir;
+  xp staging-dev;
+  npm run start;
+}
+
+function cmt-ui-local() {
+  cmt-client-dir;
+  xp staging-dev;
+  npm run start:localFS;
+}
+
+function cmt-ui-hosted() {
+  cmt-client-dir;
   xp staging-dev;
   npm run start;
 }
@@ -332,3 +348,7 @@ source ${XEALTH_ROOT}/xealth-qa-automation/otto-aliases.sh
 export JAVA_HOME=$( /usr/libexec/java_home -v16)
 export PATH=${JAVA_HOME}/bin:$PATH
 export CPPFLAGS="-I${JAVA_HOME}/include"
+
+### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
+export PATH="/Users/mason.pimentel/.rd/bin:$PATH"
+### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
