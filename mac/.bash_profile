@@ -200,6 +200,16 @@ function cms-ui() {
   npm run serve;
 }
 
+function cms-deploy-local() {
+  xp staging-dev;
+  cd ~/xealth/xealth-cms;
+  nx run ctf-scripts:test;
+  if [ $? -ne 0 ]; then
+    return
+  fi
+  nx run ctf-scripts:deploy-local;
+}
+
 function cms-deploy-int() {
   xp staging-dev;
   cd ~/xealth/xealth-cms;
@@ -208,6 +218,10 @@ function cms-deploy-int() {
     return
   fi
   nx run ctf-scripts:deploy-int;
+}
+
+function cms-run-test-fields() {
+  nx run ctf-fields:test;
 }
 
 # Xealth-CMT -------------------------------------------------------------------
