@@ -203,25 +203,33 @@ function cms-ui() {
 function cms-deploy-local() {
   xp staging-dev;
   cd ~/xealth/xealth-cms;
-  nx run ctf-scripts:test;
+  ./node_modules/nx/bin/nx.js run ctf-scripts:test;
   if [ $? -ne 0 ]; then
     return
   fi
-  nx run ctf-scripts:deploy-local;
+  ./node_modules/nx/bin/nx.js run ctf-scripts:deploy-local;
 }
 
 function cms-deploy-int() {
   xp staging-dev;
   cd ~/xealth/xealth-cms;
-  nx run ctf-scripts:test;
+  ./node_modules/nx/bin/nx.js run ctf-scripts:test;
   if [ $? -ne 0 ]; then
     return
   fi
-  nx run ctf-scripts:deploy-int;
+  ./node_modules/nx/bin/nx.js run ctf-scripts:deploy-int;
 }
 
 function cms-run-test-fields() {
-  nx run ctf-fields:test;
+  ./node_modules/nx/bin/nx.js run ctf-fields:test;
+}
+
+function cms-run-test-email-tool() {
+  ./node_modules/nx/bin/nx.js run ctf-email-template-tool:test;
+}
+
+function cms-run-test-libs() {
+  ./node_modules/nx/bin/nx.js run lib-ctf:test -- --watch true;
 }
 
 # Xealth-CMT -------------------------------------------------------------------
