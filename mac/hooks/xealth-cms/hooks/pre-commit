@@ -1,0 +1,36 @@
+#!/bin/sh
+
+if git rev-parse --verify HEAD >/dev/null 2>&1
+then
+	against=HEAD
+else
+	# Initial commit: diff against an empty tree object
+	against=4b825dc642cb6eb9a060e54bf8d69288fbee4904
+fi
+
+REGEXP="\b(describe|it)\.only"
+CULPRITS=$(git diff-index --name-only --cached -G$REGEXP $against)
+if [ ! -z "$CULPRITS" ] ; then
+  cat <<EOF
+Error: You are attempting to commit files that have 'describe.only' or 'it.only'
+
+$CULPRITS
+
+EOF
+	exit 1
+fi
+
+#cd ~/xealth/xealth-cms/contentful/apps/fields
+#npm run format 
+#cd ~/xealth/xealth-cms/contentful/apps/status-bar
+#npm run format
+
+npm run lint
+mv ~/xealth/xealth-cms/dist ~
+npm run format
+mv ~/dist ~/xealth/xealth-cms
+
+cd ~/xealth/xealth-cms/server
+npm run format
+
+exit 0
