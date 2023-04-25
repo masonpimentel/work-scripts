@@ -213,6 +213,7 @@ function cms-deploy-local() {
 function cms-deploy-int() {
   xp staging-dev;
   cd ~/xealth/xealth-cms;
+  npm ci;
   ./node_modules/nx/bin/nx.js run ctf-scripts:test;
   if [ $? -ne 0 ]; then
     return
@@ -221,17 +222,14 @@ function cms-deploy-int() {
 }
 
 function cms-run-test-fields() {
-  cd ~/xealth/xealth-cms;
   ./node_modules/nx/bin/nx.js run ctf-fields:test;
 }
 
 function cms-run-test-email-tool() {
-  cd ~/xealth/xealth-cms;
   ./node_modules/nx/bin/nx.js run ctf-email-template-tool:test;
 }
 
 function cms-run-test-libs() {
-  cd ~/xealth/xealth-cms;
   ./node_modules/nx/bin/nx.js run lib-ctf:test -- --watch true;
 }
 
@@ -305,7 +303,7 @@ function nvm-14() {
 # Git --------------------------------------------------------------------------
 
 function empty-commit() {
-  git commit --allow-empty -m 'rb';
+  git commit --allow-empty -m rb;
 }
 
 function create-init-branch() {
