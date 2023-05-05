@@ -64,91 +64,101 @@ function server-docker() {
 
 # Xealth-Server ----------------------------------------------------------------
 
-function server-ps() {
-  server-docker;
-  docker-compose ps;
-}
-
-function server-build() {
-  server-docker;
-  docker compose build;
-}
-
-function server-recompile() {
+function server-unit() {
   server;
-  rm -rf ./dist;
-  npm run build;
-  npm run docker-watch;
+  ./tools/kruntests.sh npm run test:unit -- --timeout 60000 --watch --reporter min;
 }
 
-function server-down() {
-  server-docker;
-  docker compose down --remove-orphans;
-  docker volume prune -f;
-}
-
-function server-up() {
-  AWS_PROFILE=staging-dev-x;
-  server-docker;
-  export COMPOSE_FILE=docker-compose.yml:docker-compose.override.yml:docker-compose.incremental.yml:docker-compose.local-disabled.yml;
-  docker-compose up;
-}
-
-function server-up-xqaa() {
-  AWS_PROFILE=staging-dev-x;
-  server-docker;
-  export COMPOSE_FILE=docker-compose.yml:docker-compose.override.yml:docker-compose.incremental.yml;
-  docker-compose up;
-}
-
-function server-up-locales() {
-  AWS_PROFILE=staging-dev-x;
-  server-docker;
-  export COMPOSE_FILE=docker-compose.yml:docker-compose.override.yml:docker-compose.incremental.yml:docker-compose.local-es.yml
-  docker-compose up;
-}
-
-function server-logs() {
-  server-docker;
-  docker logs -f xealth-server-1 | bunyan;
-}
-
-function server-worker-logs() {
-  server-docker;
-  docker logs -f xealth-worker-1 | bunyan;
-}
-
-function server-up-pns() {
-  AWS_PROFILE=staging-dev-x;
-  server-docker;
-  export COMPOSE_FILE=docker-compose.yml:docker-compose.override.yml:docker-compose.incremental.yml:docker-compose.local-disabled.yml:docker-compose.local-pns.yml;
-  docker-compose up;
-}
-
-function server-test-unit() {
-  server-docker;
-  docker-compose exec servertest npm run test:run -- -w dist/test/mocha/unit --recursive --exit;
-}
-
-function server-test-unit-nowait() {
+function server-int() {
   server;
-  npm run build && NODE_ENV=dockerlocal npm run test:unit;
+  ./tools/kruntests.sh npm run test:int -- --timeout 60000 --watch --reporter min;
 }
 
-function server-test-int() {
-  server-docker;
-  docker-compose exec servertest npm run test:run -- -w dist/test/mocha/integration --recursive --exit;
-}
-
-function server-test-legacy() {
-  server-docker;
-  docker-compose exec servertest npm run test:run -- -w dist/test/mocha/legacy --recursive --exit;
-}
-
-function server-test-system() {
-  server-docker;
-  docker-compose exec servertest npm run test:run -- -w dist/test/mocha/system --recursive --exit;
-}
+# function server-ps() {
+#   server-docker;
+#   docker-compose ps;
+# }
+#
+# function server-build() {
+#   server-docker;
+#   docker compose build;
+# }
+#
+# function server-recompile() {
+#   server;
+#   rm -rf ./dist;
+#   npm run build;
+#   npm run docker-watch;
+# }
+#
+# function server-down() {
+#   server-docker;
+#   docker compose down --remove-orphans;
+#   docker volume prune -f;
+# }
+#
+# function server-up() {
+#   AWS_PROFILE=staging-dev-x;
+#   server-docker;
+#   export COMPOSE_FILE=docker-compose.yml:docker-compose.override.yml:docker-compose.incremental.yml:docker-compose.local-disabled.yml;
+#   docker-compose up;
+# }
+#
+# function server-up-xqaa() {
+#   AWS_PROFILE=staging-dev-x;
+#   server-docker;
+#   export COMPOSE_FILE=docker-compose.yml:docker-compose.override.yml:docker-compose.incremental.yml;
+#   docker-compose up;
+# }
+#
+# function server-up-locales() {
+#   AWS_PROFILE=staging-dev-x;
+#   server-docker;
+#   export COMPOSE_FILE=docker-compose.yml:docker-compose.override.yml:docker-compose.incremental.yml:docker-compose.local-es.yml
+#   docker-compose up;
+# }
+#
+# function server-logs() {
+#   server-docker;
+#   docker logs -f xealth-server-1 | bunyan;
+# }
+#
+# function server-worker-logs() {
+#   server-docker;
+#   docker logs -f xealth-worker-1 | bunyan;
+# }
+#
+# function server-up-pns() {
+#   AWS_PROFILE=staging-dev-x;
+#   server-docker;
+#   export COMPOSE_FILE=docker-compose.yml:docker-compose.override.yml:docker-compose.incremental.yml:docker-compose.local-disabled.yml:docker-compose.local-pns.yml;
+#   docker-compose up;
+# }
+#
+# function server-test-unit() {
+#   server-docker;
+#   docker-compose exec servertest npm run test:run -- -w dist/test/mocha/unit --recursive --exit;
+# }
+#
+# function server-test-unit-nowait() {
+#   server;
+#   npm run build && NODE_ENV=dockerlocal npm run test:unit;
+# }
+#
+# function server-test-int() {
+#   server-docker;
+#   docker-compose exec servertest npm run test:run -- -w dist/test/mocha/integration --recursive --exit;
+# }
+#
+# function server-test-legacy() {
+#   server-docker;
+#   docker-compose exec servertest npm run test:run -- -w dist/test/mocha/legacy --recursive --exit;
+# }
+#
+# function server-test-system() {
+#   server-docker;
+#   docker-compose exec servertest npm run test:run -- -w dist/test/mocha/system --recursive --exit;
+# }
 
 # Xealth-CMS -------------------------------------------------------------------
 
@@ -231,6 +241,10 @@ function cms-run-test-email-tool() {
 
 function cms-run-test-libs() {
   ./node_modules/nx/bin/nx.js run lib-ctf:test -- --watch true;
+}
+
+function cms-run-test-asset-uploader() {
+  ./node_modules/nx/bin/nx.js run ctf-asset-uploader:test -- --watch true;
 }
 
 # Xealth-CMT -------------------------------------------------------------------
