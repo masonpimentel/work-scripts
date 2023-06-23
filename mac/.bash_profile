@@ -15,9 +15,12 @@ export PATH=$res:$PATH
 export PATH=~/xealth/xealth-devtools/tools/xscripts:$PATH
 export PATH=/usr/bin:$PATH
 export PATH=~/.rd/bin:$PATH
+export PATH=~/Library/Python/3.11/bin:$PATH
 
 export XEALTH_NPM_TOKEN=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
 export XEALTH_ROOT=~/xealth
+
+alias aws2=/usr/local/bin/aws
 
 # Setting PATH for Python 3.10
 # The original version is saved in .bash_profile.pysave
@@ -72,6 +75,21 @@ function server-unit() {
 function server-int() {
   server;
   ./tools/kruntests.sh npm run test:int -- --timeout 60000 --watch --reporter min;
+}
+
+function server-server-logs() {
+  server;
+  ./tools/klogs.sh server | bunyan;
+}
+
+function server-worker-logs() {
+  server;
+  ./tools/klogs.sh worker | bunyan;
+}
+
+function server-mongo-open() {
+  server;
+  ./tools/kporforward.sh mongo;
 }
 
 # function server-ps() {
@@ -213,22 +231,22 @@ function cms-ui() {
 function cms-deploy-local() {
   xp staging-dev;
   cd ~/xealth/xealth-cms;
-  ./node_modules/nx/bin/nx.js run ctf-scripts:test;
+  nx run ctf-scripts:test;
   if [ $? -ne 0 ]; then
     return
   fi
-  ./node_modules/nx/bin/nx.js run ctf-scripts:deploy-local;
+  nx run ctf-scripts:deploy-local;
 }
 
 function cms-deploy-int() {
   xp staging-dev;
   cd ~/xealth/xealth-cms;
   npm ci;
-  ./node_modules/nx/bin/nx.js run ctf-scripts:test;
+  nx run ctf-scripts:test;
   if [ $? -ne 0 ]; then
     return
   fi
-  ./node_modules/nx/bin/nx.js run ctf-scripts:deploy-int;
+  nx run ctf-scripts:deploy-int;
 }
 
 function cms-run-test-fields() {
@@ -336,7 +354,7 @@ function init-personal() {
 # Misc -------------------------------------------------------------------------
 
 function ecr-login() {
-  xp master-build
+  xp staging-dev
   local password=$(aws ecr get-login-password)
   local account=${AWS_ECR_LOGIN_ACCOUNT:-$(aws sts get-caller-identity --query 'Account' --output text)}
   local region=${AWS_REGION:-us-west-2}
@@ -389,3 +407,8 @@ export CPPFLAGS="-I${JAVA_HOME}/include"
 ### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
 export PATH="/Users/mason.pimentel/.rd/bin:$PATH"
 ### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
+
+# Setting PATH for Python 3.11
+# The original version is saved in .bash_profile.pysave
+PATH="/Library/Frameworks/Python.framework/Versions/3.11/bin:${PATH}"
+export PATH
