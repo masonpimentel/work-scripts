@@ -92,6 +92,23 @@ function server-mongo-open() {
   ./tools/kporforward.sh mongo;
 }
 
+function server-watch() {
+  server;
+  ./watch.sh;
+}
+
+# Run this once after spinning up rancher desktop
+function server-deploy() {
+  server;
+  kubectx rancher-desktop || kubectl config use-context rancher-desktop
+  kustomize build k8s/infra/ | kubectl apply -f -
+}
+
+function server-up() {
+  server;
+  skaffold dev --port-forward=services
+}
+
 # function server-ps() {
 #   server-docker;
 #   docker-compose ps;
@@ -265,6 +282,15 @@ function cms-run-test-asset-uploader() {
   ./node_modules/nx/bin/nx.js run ctf-asset-uploader:test -- --watch true;
 }
 
+# Xealth-Matrix
+
+function matrix-server() {
+  xp staging-dev;
+  cd $XEALTH_ROOT/xealth-xtools;
+  nvm use;
+  npm run serve matrix-api;
+}
+
 # Xealth-CMT -------------------------------------------------------------------
 
 function cmt-client-dir() {
@@ -338,12 +364,20 @@ function empty-commit() {
   git commit --allow-empty -m rb;
 }
 
+# Pass target branch as arg
 function create-init-branch() {
+  if [ $# == 1 ]
+  then
+    BRANCH=$1
+  else
+    BRANCH="master"
+  fi
+
   curBranch=$(git rev-parse --abbrev-ref HEAD)
   git checkout -b "${curBranch}init"
   git push -u origin HEAD
   git checkout $curBranch
-  git reset --hard origin/master
+  git reset --hard "origin/${BRANCH}"
   git push -uf origin HEAD
 }
 
