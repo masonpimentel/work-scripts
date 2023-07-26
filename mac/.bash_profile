@@ -288,7 +288,30 @@ function matrix-server() {
   xp staging-dev;
   cd $XEALTH_ROOT/xealth-xtools;
   nvm use;
-  npm run serve matrix-api;
+  npm run nx serve matrix-api;
+}
+
+function matrix-ui() {
+  xp staging-dev;
+  cd $XEALTH_ROOT/xealth-xtools;
+  nvm use;
+  npm run nx serve xtools-next-app;
+}
+
+# Xealth-HL7
+
+function hl7-server() {
+  xp staging-dev;
+  cd $XEALTH_ROOT/xealth-hl7/docker/test;
+  nvm use;
+  docker-compose up;
+}
+
+function hl7-watch() {
+  xp staging-dev;
+  cd $XEALTH_ROOT/xealth-hl7;
+  nvm use;
+  npm run watch;
 }
 
 # Xealth-CMT -------------------------------------------------------------------
