@@ -109,92 +109,6 @@ function server-up() {
   skaffold dev --port-forward=services
 }
 
-# function server-ps() {
-#   server-docker;
-#   docker-compose ps;
-# }
-#
-# function server-build() {
-#   server-docker;
-#   docker compose build;
-# }
-#
-# function server-recompile() {
-#   server;
-#   rm -rf ./dist;
-#   npm run build;
-#   npm run docker-watch;
-# }
-#
-# function server-down() {
-#   server-docker;
-#   docker compose down --remove-orphans;
-#   docker volume prune -f;
-# }
-#
-# function server-up() {
-#   AWS_PROFILE=staging-dev-x;
-#   server-docker;
-#   export COMPOSE_FILE=docker-compose.yml:docker-compose.override.yml:docker-compose.incremental.yml:docker-compose.local-disabled.yml;
-#   docker-compose up;
-# }
-#
-# function server-up-xqaa() {
-#   AWS_PROFILE=staging-dev-x;
-#   server-docker;
-#   export COMPOSE_FILE=docker-compose.yml:docker-compose.override.yml:docker-compose.incremental.yml;
-#   docker-compose up;
-# }
-#
-# function server-up-locales() {
-#   AWS_PROFILE=staging-dev-x;
-#   server-docker;
-#   export COMPOSE_FILE=docker-compose.yml:docker-compose.override.yml:docker-compose.incremental.yml:docker-compose.local-es.yml
-#   docker-compose up;
-# }
-#
-# function server-logs() {
-#   server-docker;
-#   docker logs -f xealth-server-1 | bunyan;
-# }
-#
-# function server-worker-logs() {
-#   server-docker;
-#   docker logs -f xealth-worker-1 | bunyan;
-# }
-#
-# function server-up-pns() {
-#   AWS_PROFILE=staging-dev-x;
-#   server-docker;
-#   export COMPOSE_FILE=docker-compose.yml:docker-compose.override.yml:docker-compose.incremental.yml:docker-compose.local-disabled.yml:docker-compose.local-pns.yml;
-#   docker-compose up;
-# }
-#
-# function server-test-unit() {
-#   server-docker;
-#   docker-compose exec servertest npm run test:run -- -w dist/test/mocha/unit --recursive --exit;
-# }
-#
-# function server-test-unit-nowait() {
-#   server;
-#   npm run build && NODE_ENV=dockerlocal npm run test:unit;
-# }
-#
-# function server-test-int() {
-#   server-docker;
-#   docker-compose exec servertest npm run test:run -- -w dist/test/mocha/integration --recursive --exit;
-# }
-#
-# function server-test-legacy() {
-#   server-docker;
-#   docker-compose exec servertest npm run test:run -- -w dist/test/mocha/legacy --recursive --exit;
-# }
-#
-# function server-test-system() {
-#   server-docker;
-#   docker-compose exec servertest npm run test:run -- -w dist/test/mocha/system --recursive --exit;
-# }
-
 # Xealth-CMS -------------------------------------------------------------------
 
 function cms-dir() {
@@ -393,7 +307,8 @@ function create-init-branch() {
   then
     BRANCH=$1
   else
-    BRANCH="master"
+    echo "Usage: create-init-branch <target branch>"
+    return
   fi
 
   curBranch=$(git rev-parse --abbrev-ref HEAD)
@@ -421,25 +336,6 @@ function ecr-login() {
     --username AWS \
     "$url" <<<$password
 }
-
-# alias server-up-temp='server-docker && export COMPOSE_FILE=docker-compose.yml:docker-compose.override.yml:docker-compose.incremental.yml && xp staging-dev && docker-compose up -d '
-# alias server-up-es='server-docker && export COMPOSE_FILE=docker-compose.yml:docker-compose.override.yml:docker-compose.incremental.yml:docker-compose.local-es.yml:docker-compose.local-disabled.yml && xp staging-dev && docker-compose up -d '
-# alias server-up-harold='server-docker && export COMPOSE_FILE=docker-compose.yml:docker-compose.override.yml:docker-compose.incremental.yml:docker-compose.local-harold.yml:docker-compose.local-disabled.yml && xp staging-dev && docker-compose up -d '
-# alias server-up-harold-dev='server-docker && export COMPOSE_FILE=docker-compose.yml:docker-compose.override.yml:docker-compose.incremental.yml:docker-compose.local-harold-dev.yml:docker-compose.local-disabled.yml && xp staging-dev && docker-compose up -d '
-# alias server-up-local='server-docker && export COMPOSE_FILE=docker-compose.yml:docker-compose.override.yml:docker-compose.incremental.yml:docker-compose.local-harold.yml:docker-compose.local-es.yml:docker-compose.local-disabled.yml && xp staging-dev && docker-compose up -d '
-# alias server-up-gw='server-docker && export COMPOSE_FILE=docker-compose.yml:docker-compose.override.yml:docker-compose.incremental.yml:docker-compose.local-gw.yml:docker-compose.local-disabled.yml && xp staging-dev && docker-compose up -d '
-# alias server-restart='server-docker && docker-compose restart server'
-# alias server-list-q='aws --endpoint-url http://localhost:4566 --region us-west-2 sqs list-queues'
-# alias server-purge-q='aws --endpoint-url http://localhost:4566 --region us-west-2 sqs purge-queue'
-# alias worker-restart='server-docker && docker-compose restart worker'
-# alias mongo-exec='docker exec -ti xealth_mongo_1 mongo xealth'
-# alias server-test-unit='server && NODE_ENV=dockerlocal npm run test:unit'
-# alias server-test-leg='server-docker && docker-compose exec servertest npm run test:run -- -w dist/test/mocha/legacy --recursive --exit'
-# alias server-test-sys='server-docker && docker-compose exec servertest npm run test:run -- -w dist/test/mocha/system --recursive --exit'
-# alias server-test='server-docker && docker-compose exec servertest npm test'
-# alias server-log='server-docker && docker logs -f xealth-server-1 | bunyan'
-# alias worker-log='server-docker && docker logs -f xealth-worker-1 | bunyan'
-# alias orders-log='server-docker && docker logs -f xealth-automated-ordering-1 | bunyan'
 
 # Setting PATH for Python 3.10
 # The original version is saved in .bash_profile.pysave
