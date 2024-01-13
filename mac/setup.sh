@@ -1,9 +1,0 @@
-echo "WARNING! This will blow away the current command init script (ex. .bash_profile, .zshrc) Exit this script to first save, or press any key to continue"
-read temp
-cp -rfp ../ ~/Scripts
-echo "1. Terminal initialization file? (pre-Catalina Mac this was /Users/<username>/.bash_profile, after it became /Users/<username>/.zshrc)"
-read termInit
-cat scriptsMaintenance/recPath | tail -n +3 > $termInit
-echo "2. Mac username (path of user root, ex. /Users/mason.pimentel - enter mason.pimentel)"
-read username
-sed -i '' "s/usernamegoeshere/$username/" ~/Scripts/mac/workflow/l
