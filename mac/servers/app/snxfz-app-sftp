@@ -1,3 +1,0 @@
-#!/bin/bash
-
-sftp -P 9472 snxfz-app@server.mpimentel.net

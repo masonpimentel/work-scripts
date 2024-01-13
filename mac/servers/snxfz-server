@@ -1,3 +1,0 @@
-#!/bin/bash
-
-ssh -p 9470 snxfz947@server.mpimentel.net

@@ -1,9 +1,0 @@
-#!/bin/bash
-
-if [ -z "$1" ]
-then
-      echo "Usage: snxfz-app-clone <repository name> (note: use snxfz-app-list-repos to get list of repos)"
-      exit
-fi
-
-git clone ssh://snxfz-app@server.mpimentel.net:9472/home/snxfz-app/private_repos/$1.git

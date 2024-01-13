@@ -1,3 +1,0 @@
-#!/bin/bash
-
-ssh -p 9472 snxfz-app@server.mpimentel.net "cat ~/email-validator/output.txt"
