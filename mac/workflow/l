@@ -1,4 +1,26 @@
-#!/bin/bash
+#!/bin/zsh
+
+# --- VARIABLE BLOCK ---
+DAYS_DIR=
+
+# --- END VARIABLE BLOCK ---
+
+if [[ -z "$DAYS_DIR" ]]; then
+  echo "DAYS_DIR is not set."
+  read "input_days_dir?Please enter the days dir. Don't forget the final forward slash. It looks something like '/Users/mason.pimentel/Google Drive/My Drive/Work/Days/': "
+
+  # Escape for safe use in sed
+  escaped_days_dir=$(printf '%s\n' "$input_days_dir" | sed 's/[&/\]/\\&/g')
+
+  # Update the script
+  script_file="${(%):-%x}"  # Get the current script path
+  sed -i '' "s/^DAYS_DIR=.*/DAYS_DIR=\"$escaped_days_dir\"/" "$script_file"
+
+  echo "Script updated with DAYS_DIR=\"$input_days_dir\". Please re-run it."
+  exit 0
+fi
+
+echo "DAYS_DIR: $DAYS_DIR"
 
 # Create work directory
 
@@ -10,9 +32,7 @@ echo Creating directory $dir
 notes="Notes"$dir".txt"
 echo Creating $notes
 
-days="/Users/mason.pimentel/Google Drive/My Drive/Work/Days/"
-
-mkdir "$days$dir"
-touch "$days$dir/$notes"
-echo $(date +"%A") > "$days$dir/$notes"
-printf "\n" >> "$days$dir/$notes"
+mkdir "$DAYS_DIR$dir"
+touch "$DAYS_DIR$dir/$notes"
+echo $(date +"%A") > "$DAYS_DIR$dir/$notes"
+printf "\n" >> "$DAYS_DIR$dir/$notes"
