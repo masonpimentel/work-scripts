@@ -9,6 +9,11 @@ if [[ -z "$DAYS_DIR" ]]; then
   echo "DAYS_DIR is not set."
   read "input_days_dir?Please enter the days dir. Don't forget the final forward slash. It looks something like '/Users/mason.pimentel/Google Drive/My Drive/Work/Days/': "
 
+  if [[ "$input_days_dir" != */ ]]; then
+    echo "String does not end with /"
+    exit 0
+  fi
+
   # Escape for safe use in sed
   escaped_days_dir=$(printf '%s\n' "$input_days_dir" | sed 's/[&/\]/\\&/g')
 

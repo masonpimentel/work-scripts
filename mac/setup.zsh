@@ -18,4 +18,4 @@ rm -rf "$DEST_DIR" && mkdir -p "$DEST_DIR"
 # Find and move files without extensions
 find "$SOURCE_DIR" -type f -not -name "*.*" -exec cp "{}" "$DEST_DIR" \;
 
-echo "Done"
+echo "Done!"
