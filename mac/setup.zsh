@@ -13,7 +13,7 @@ SOURCE_DIR="."              # Current working directory
 DEST_DIR="$HOME/Scripts"
 
 # Clear and recreate destination directory
-rm -rf "$DEST_DIR" && mkdir -p "$DEST_DIR"
+mkdir -p "$DEST_DIR"
 
 # Find and move files without extensions
 find "$SOURCE_DIR" -type f -not -name "*.*" -exec cp "{}" "$DEST_DIR" \;
